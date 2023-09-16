@@ -15,26 +15,33 @@ int main(int argc, char *argv[], char **env)
 	char *lineptr = NULL;
 	size_t n = sizeof(size_t) * 1024;
 	char *args[] = {"/bin/ls", NULL};
-	pid_t child;
+	pid_t child_process;
 
 	while (argc)
 	{
 		write(1, "$ ", 2);
 		status = getline(&lineptr, &n, stdin);
 		if (status == -1)
-			exit(0);
+		{
+			free(lineptr);
+			exit(EXIT_SUCCESS);
+		}
 		lineptr[strlen(lineptr) - 1] = '\0';
-		child = fork();
-		if (child == 0)
+
+		child_process = fork();
+		if (child_process == 0)
 		{
 			if (execve(lineptr, args, env) == -1)
+			{
 				perror(argv[0]);
-			exit(0);
+				free(lineptr);
+				exit(EXIT_FAILURE);
+			}
 		}
 		else
 		{
 			do {
-				waitpid(child, &i, WUNTRACED);
+				waitpid(child_process, &i, WUNTRACED);
 			} while (!WIFEXITED(i) && !WIFSIGNALED(i));
 		}
 	}
