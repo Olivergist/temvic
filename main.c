@@ -11,25 +11,21 @@
  */
 int main(int argc, char *argv[], char **env)
 {
-	ssize_t status;
-	char *lineptr = NULL;
-	size_t n = sizeof(size_t) * 1024;
-	char *args[] = {"/bin/ls", NULL};
+	char *buffer = NULL, *lineptr = NULL;
+	char **args;
 
 	while (argc)
 	{
 		if (isatty(0) == 1)
 			write(1, "$ ", 2);
-		status = getline(&lineptr, &n, stdin);
-		if (status == -1)
-		{
-			free(lineptr);
-			exit(EXIT_SUCCESS);
-		}
-		lineptr[strlen(lineptr) - 1] = '\0';
 
-		child_process(argv[0], lineptr, args, env);
+		buffer = read_line(lineptr);
+
+		args = tokenize(buffer, " ");
+		if (args != NULL)
+			child_process(argv[0], args, env, buffer);
+		free(buffer);
+		free(args);
 	}
-	free(lineptr);
 	return (0);
 }

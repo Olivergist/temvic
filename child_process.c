@@ -1,10 +1,6 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <sys/wait.h>
+#include "main.h"
 
-int child_process(char *progname, char *command, char **args, char **env)
+void child_process(char *progname, char **args, char **env, char *buffer)
 {
 	pid_t child;
 	int status;
@@ -12,10 +8,11 @@ int child_process(char *progname, char *command, char **args, char **env)
 	child = fork();
 	if (child == 0)
 	{
-		if (execve(command, args, env) == -1)
+		if (execve(args[0], args, env) == -1)
 		{
 			perror(progname);
-			free(command);
+			free(buffer);
+			free(args);
 			exit(EXIT_FAILURE);
 		}
 	}
@@ -26,6 +23,4 @@ int child_process(char *progname, char *command, char **args, char **env)
 			waitpid(child, &status, WUNTRACED);
 		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
 	}
-
-	return (0);
 }
