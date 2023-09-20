@@ -20,7 +20,8 @@ typedef struct builtin_s
 	int (*func)(char **, char **);
 } builtin_t;
 
-void child_process(char *progname, char **args, char **env, char *buffer);
+void child_process(char *progname, char **args, char **env, char *cmd,
+	char *buffer);
 char **tokenize(char *lineptr, char *delim);
 char *read_line(int status, char *lineptr);
 char *syspath(void);

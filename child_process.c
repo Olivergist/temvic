@@ -1,6 +1,7 @@
 #include "main.h"
 
-void child_process(char *progname, char **args, char **env, char *buffer)
+void child_process(char *progname, char **args, char **env, char *cmd,
+	char *buffer)
 {
 	pid_t child;
 	int status;
@@ -11,6 +12,7 @@ void child_process(char *progname, char **args, char **env, char *buffer)
 		if (execve(args[0], args, env) == -1)
 		{
 			perror(progname);
+			free(cmd);
 			free(buffer);
 			free(args);
 			exit(EXIT_FAILURE);
