@@ -23,7 +23,7 @@ int main(int argc, char *argv[], char **env)
 
 		args = tokenize(buffer, " ");
 		if (args != NULL)
-			child_process(argv[0], args, env, buffer);
+			access_command(argv[0], args, env, buffer);
 		free(buffer);
 		free(args);
 	}
