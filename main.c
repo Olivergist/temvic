@@ -11,7 +11,7 @@
  */
 int main(int argc, char *argv[], char **env)
 {
-	int status;
+	int status = 0;
 	char *buffer = NULL, *lineptr = NULL;
 	char **args;
 
@@ -27,8 +27,6 @@ int main(int argc, char *argv[], char **env)
 			status = access_command(argv[0], args, env, buffer);
 		free(buffer);
 		free(args);
-		if (status == -1)
-			exit(EXIT_SUCCESS);
 	}
 	return (status);
 }
