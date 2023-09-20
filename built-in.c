@@ -24,3 +24,17 @@ int exit_builtin(char **args, char **env)
 
 	return (-1); /* to detect when exit was entered */
 }
+
+int env_builtin(char __attribute__((unused))**args, char **env)
+{
+	int i = 0;
+
+	if (env == NULL)
+		return (1);
+	while (env[i] != NULL)
+	{
+		write(1, env[i], custom_strlen(env[i]));
+		i++;
+	}
+	return (0);
+}

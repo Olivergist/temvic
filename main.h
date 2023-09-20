@@ -31,5 +31,6 @@ size_t custom_strlen(const char *str);
 void command_not_found(char *progname, char **args);
 int exit_builtin(char **args, char **env);
 int builtin(char **args, char **env);
+int env_builtin(char **args, char **env);
 
 #endif	/* MAIN_H */
