@@ -13,5 +13,6 @@ char *read_line(int status, char *lineptr);
 char *syspath(void);
 char **syspaths(void);
 int access_command(char *progname, char **args, char **env, char *buffer);
-
+size_t custom_strlen(const char *str);
+void command_not_found(char *progname, char **args);
 #endif	/* MAIN_H */

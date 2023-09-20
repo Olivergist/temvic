@@ -32,6 +32,16 @@ int access_command(char *progname, char **args, char **env, char *buffer)
 		}
 		free(path);
 	}
-	perror(progname);
+	command_not_found(progname, args);
 	return (1);
+}
+
+
+void command_not_found(char *progname, char **args)
+{
+	write(2, progname, custom_strlen(progname));
+	write(2, ": ", 2);
+	write(2, "1: ", 4);
+	write(2, args[0], custom_strlen(args[0]));
+	write(2, ": not found\n", 12);
 }
