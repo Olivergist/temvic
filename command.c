@@ -25,7 +25,6 @@ int access_command(char *progname, char **args, char **env, char *buffer)
 
 	else
 	{
-		i = 0;
 		path = syspath();
 
 		if (path == NULL)
@@ -35,37 +34,47 @@ int access_command(char *progname, char **args, char **env, char *buffer)
 			return (1);
 		}
 		_path = strtok(path, ":");
-		while (_path != NULL)
-		{
-			cmd = calloc(sizeof(char), 1024);
-			if (cmd == NULL)
-			{
-				write(1, "Unable to allocate memory\n", 26);
-				free(args);
-				free(buffer);
-				exit(EXIT_FAILURE);
-			}
-
-			strcpy(cmd, _path);
-			strcat(cmd, "/");
-			strcat(cmd, args[0]); /* path[i]/<the command> */
-			if (access(cmd, X_OK) == 0)
-			{
-				/* simply copy the path[i] into args[0] */
-				/* because it will be needed in the child_process function */
-				args[0] = cmd;
-				free(path);
-				child_process(progname, args, env, cmd, buffer);
-				free(cmd);
-				return (0);
-			}
-			i++;
-			_path = strtok(NULL, ":");
-			free(cmd);
-		}
+		i = access_command2(_path, path, progname, args, env, buffer);
+		if (i == 0)
+			return (0);
 		free(path);
 	}
 	command_not_found(progname, args);
+	return (1);
+}
+
+int access_command2(char *_path, char *path, char *progname, char **args,
+	char **env, char *buffer)
+{
+	char *cmd;
+
+	while (_path != NULL)
+	{
+		cmd = calloc(sizeof(char), 1024);
+		if (cmd == NULL)
+		{
+			write(1, "Unable to allocate memory\n", 26);
+			free(args);
+			free(buffer);
+			exit(EXIT_FAILURE);
+		}
+
+		strcpy(cmd, _path);
+		strcat(cmd, "/");
+		strcat(cmd, args[0]); /* path[i]/<the command> */
+		if (access(cmd, X_OK) == 0)
+		{
+			/* simply copy the path[i] into args[0] */
+			/* because it will be needed in the child_process function */
+			args[0] = cmd;
+			free(path);
+			child_process(progname, args, env, cmd, buffer);
+			free(cmd);
+			return (0);
+		}
+		_path = strtok(NULL, ":");
+		free(cmd);
+	}
 	return (1);
 }
 
