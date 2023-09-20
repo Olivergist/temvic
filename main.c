@@ -22,7 +22,7 @@ int main(int argc, char *argv[], char **env)
 
 		buffer = read_line(status, lineptr);
 
-		args = tokenize(buffer, " ");
+		args = tokenize(buffer, " \t\n\r");
 		if (args != NULL)
 			status = access_command(argv[0], args, env, buffer);
 		free(buffer);
