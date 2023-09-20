@@ -27,6 +27,8 @@ int main(int argc, char *argv[], char **env)
 			status = access_command(argv[0], args, env, buffer);
 		free(buffer);
 		free(args);
+		if (status == -1)
+			exit(EXIT_SUCCESS);
 	}
 	return (status);
 }

@@ -5,6 +5,10 @@ int access_command(char *progname, char **args, char **env, char *buffer)
 	int i;
 	char **path;
 
+	i = builtin(args, env);
+	if (i == 0 || i == -1)
+		return (i);
+
 	if (access(args[0], X_OK) == 0)
 	{
 		child_process(progname, args, env, buffer);
