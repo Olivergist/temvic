@@ -31,10 +31,8 @@ int access_command(char *progname, char **args, char **env, char *buffer)
 		{
 			cmd = malloc(sizeof(char) * 1024);
 			strcpy(cmd, _path);
-			printf("%s\n", cmd);
 			strcat(cmd, "/");
 			strcat(cmd, args[0]); /* path[i]/<the command> */
-			printf("%s\n", cmd);
 			if (access(cmd, X_OK) == 0)
 			{
 				/* simply copy the path[i] into args[0] */
