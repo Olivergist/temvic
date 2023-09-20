@@ -3,7 +3,7 @@
 int access_command(char *progname, char **args, char **env, char *buffer)
 {
 	int i;
-	char **path;
+	char *path, *_path, *cmd;
 
 	i = builtin(args, env);
 	if (i == 0 || i == -1)
@@ -18,22 +18,39 @@ int access_command(char *progname, char **args, char **env, char *buffer)
 	else
 	{
 		i = 0;
-		path = syspaths();
-		while (path[i] != NULL)
+		path = syspath();
+		if (path == NULL)
 		{
-			strcat(path[i], "/");
-			strcat(path[i], args[0]); /* path[i]/<the command> */
-			if (access(path[i], X_OK) == 0)
+			command_not_found(progname, args);
+			free(path);
+			return (1);
+		}
+		_path = malloc(sizeof(char) * 1024);
+		_path = strtok(path, ":");
+		while (_path != NULL)
+		{
+			cmd = malloc(sizeof(char) * 1024);
+			strcpy(cmd, _path);
+			printf("%s\n", cmd);
+			strcat(cmd, "/");
+			strcat(cmd, args[0]); /* path[i]/<the command> */
+			printf("%s\n", cmd);
+			if (access(cmd, X_OK) == 0)
 			{
 				/* simply copy the path[i] into args[0] */
 				/* because it will be needed in the child_process function */
-				args[0] = path[i];
+				args[0] = cmd;
+				free(_path);
 				free(path);
+				free(cmd);
 				child_process(progname, args, env, buffer);
 				return (0);
 			}
 			i++;
+			_path = strtok(NULL, ":");
+			free(cmd);
 		}
+		free(_path);
 		free(path);
 	}
 	command_not_found(progname, args);

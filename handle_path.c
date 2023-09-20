@@ -2,14 +2,17 @@
 
 char *syspath(void)
 {
-	char *path_dup;
-	char *path = getenv("PATH");
+	char *_path, *path;
+
+	path = getenv("PATH");
+	if (path == NULL)
+		return (NULL);
 
 	/* create a duplicate of the path */
 	/* strdup mallocs the path_dup variable */
-	path_dup = strdup(path);
+	_path = strdup(path);
 
-	return (path_dup);
+	return (_path);
 }
 
 /**
@@ -24,6 +27,12 @@ char **syspaths(void)
 	char *path;
 
 	path = syspath();
+	if (path == NULL)
+	{
+		free(path);
+		return (NULL);
+	}
+
 	paths = tokenize(path, ":");
 
 	free(path);
