@@ -1,14 +1,16 @@
 #include "main.h"
 
-char *read_line(char *lineptr)
+char *read_line(int status, char *lineptr)
 {
-	ssize_t status;
+	ssize_t flag;
 	size_t n = sizeof(size_t) * 1024;
 
-	status = getline(&lineptr, &n, stdin);
-	if (status == -1)
+	flag = getline(&lineptr, &n, stdin);
+	if (flag == -1)
 	{
 		free(lineptr);
+		if (isatty(0) == 0)
+			exit(status);
 		exit(EXIT_SUCCESS);
 	}
 

@@ -11,6 +11,7 @@
  */
 int main(int argc, char *argv[], char **env)
 {
+	int status;
 	char *buffer = NULL, *lineptr = NULL;
 	char **args;
 
@@ -19,13 +20,13 @@ int main(int argc, char *argv[], char **env)
 		if (isatty(0) == 1)
 			write(1, "$ ", 2);
 
-		buffer = read_line(lineptr);
+		buffer = read_line(status, lineptr);
 
 		args = tokenize(buffer, " ");
 		if (args != NULL)
-			access_command(argv[0], args, env, buffer);
+			status = access_command(argv[0], args, env, buffer);
 		free(buffer);
 		free(args);
 	}
-	return (0);
+	return (status);
 }
