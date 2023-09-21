@@ -6,7 +6,7 @@ int isnumber(char *s)
 
 	while (s[i] != '\0')
 	{
-		if (isdigit(s[i]) == 0)
+		if (custom_isdigit(s[i]) == 0)
 			return (1);
 		i++;
 	}

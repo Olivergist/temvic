@@ -7,7 +7,6 @@
 #include <sys/wait.h>
 #include <unistd.h>
 #include <stddef.h>
-#include <ctype.h>
 
 /**
  * struct builtin_s - structure for builtins
@@ -37,5 +36,6 @@ int exit_builtin(char *progname, char **args, char **env, char *buffer);
 int builtin(char *progname, char **args, char **env, char *buffer);
 int env_builtin(char **args, char **env);
 int isnumber(char *s);
+int custom_isdigit(int c);
 
 #endif  /* MAIN_H */
