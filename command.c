@@ -1,5 +1,14 @@
 #include "main.h"
 
+/**
+ * access_command - handle the access
+ * @progname: handle error message
+ * @args: Array of command
+ * @env: A string pointer
+ * @buffer: A pointer of character
+ * Return: 1
+ */
+
 int access_command(char *progname, char **args, char **env, char *buffer)
 {
 	int i;
@@ -43,8 +52,19 @@ int access_command(char *progname, char **args, char **env, char *buffer)
 	return (1);
 }
 
+/**
+ * access_command2 - handle the access
+ * @_path: handle _path
+ * @path: Also handle path
+ * @progname: A string pointer
+ * @args: Array of command
+ * @env: environment strings
+ * @buffer: A pointer of character
+ * Return: 1
+ */
+
 int access_command2(char *_path, char *path, char *progname, char **args,
-	char **env, char *buffer)
+		char **env, char *buffer)
 {
 	char *cmd;
 
@@ -61,11 +81,9 @@ int access_command2(char *_path, char *path, char *progname, char **args,
 
 		strcpy(cmd, _path);
 		strcat(cmd, "/");
-		strcat(cmd, args[0]); /* path[i]/<the command> */
+		strcat(cmd, args[0]);
 		if (access(cmd, X_OK) == 0)
 		{
-			/* simply copy the path[i] into args[0] */
-			/* because it will be needed in the child_process function */
 			args[0] = cmd;
 			free(path);
 			child_process(progname, args, env, cmd, buffer);
@@ -78,8 +96,14 @@ int access_command2(char *_path, char *path, char *progname, char **args,
 	return (1);
 }
 
+/**
+ * command_not_found - Function not to find command
+ * @progname: Check error message
+ * @args: Array of command line
+ */
 
 void command_not_found(char *progname, char **args)
+
 {
 	write(2, progname, custom_strlen(progname));
 	write(2, ": ", 2);

@@ -1,5 +1,12 @@
 #include "main.h"
 
+/**
+ * read_line - fgets functions to file
+ * @lineptr: Pointer to a character
+ * @status: Checking for status
+ * Return: lineptr
+ */
+
 char *read_line(int status, char *lineptr)
 {
 	ssize_t flag;
@@ -14,7 +21,7 @@ char *read_line(int status, char *lineptr)
 		exit(EXIT_SUCCESS);
 	}
 
-	lineptr[strlen(lineptr) - 1] = '\0';
+	lineptr[custom_strlen(lineptr) - 1] = '\0';
 
 	return (lineptr);
 }

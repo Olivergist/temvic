@@ -1,5 +1,12 @@
 #include "main.h"
 
+/**
+ * tokenize - breaking of Strings
+ * @buffer: optimize data transfer
+ * @delim: sequence of Character
+ * Return: args
+ */
+
 char **tokenize(char *buffer, char *delim)
 {
 	char *token = NULL;

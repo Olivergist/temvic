@@ -1,5 +1,11 @@
 #include "main.h"
 
+/**
+ * syspath -  this function splits the path into paths
+ * Return: paths
+ */
+
+
 char *syspath(void)
 {
 	char *_path, *path;
@@ -8,18 +14,16 @@ char *syspath(void)
 	if (path == NULL)
 		return (NULL);
 
-	/* create a duplicate of the path */
-	/* strdup mallocs the path_dup variable */
+
 	_path = strdup(path);
 
 	return (_path);
 }
 
 /**
- * this function splits the path into paths
- * using ':' as the delimiter because the path
- * actually contains a list of paths separated by ':'
-*/
+ * syspaths -  this function splits the path into paths
+ * Return: paths
+ */
 
 char **syspaths(void)
 {

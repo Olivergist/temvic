@@ -1,7 +1,15 @@
 #include "main.h"
+/**
+ * child_process - create new process
+ * @progname: variable name
+ * @args: array of pointers
+ * @env: environment variables
+ * @cmd: Processing command
+ * @buffer: holding specific Data
+ */
 
 void child_process(char *progname, char **args, char **env, char *cmd,
-	char *buffer)
+		char *buffer)
 {
 	pid_t child;
 	int status;
@@ -21,8 +29,12 @@ void child_process(char *progname, char **args, char **env, char *cmd,
 
 	else
 	{
-		do {
+		do
+
+		{
 			waitpid(child, &status, WUNTRACED);
-		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
+		}
+
+		while (!WIFEXITED(status) && !WIFSIGNALED(status));
 	}
 }

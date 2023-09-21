@@ -2,12 +2,13 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
-
 #include "main.h"
-
 /**
  * main - Command line Interpreter
- * Return: 0
+ * @argc: represent the number of command
+ * @argv: array of string
+ * @env: executable file
+ * Return: status
  */
 int main(int argc, char *argv[], char **env)
 {
