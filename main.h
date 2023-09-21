@@ -37,5 +37,6 @@ int builtin(char *progname, char **args, char **env, char *buffer);
 int env_builtin(char **args, char **env);
 int isnumber(char *s);
 int custom_isdigit(int c);
+int custom_atoi(char *s);
 
 #endif  /* MAIN_H */

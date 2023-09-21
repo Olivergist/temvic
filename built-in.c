@@ -46,7 +46,7 @@ int exit_builtin(char *progname, char **args, char **env, char *buffer)
 		exit(EXIT_SUCCESS);
 	}
 
-	else if (isnumber(args[1]) == 0 && atoi(args[1]) >= 0)
+	else if (isnumber(args[1]) == 0 && custom_atoi(args[1]) >= 0)
 	{
 		i = atoi(args[1]);
 
