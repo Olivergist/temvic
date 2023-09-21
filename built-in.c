@@ -59,7 +59,7 @@ int exit_builtin(char *progname, char **args, char **env, char *buffer)
 		write(2, progname, custom_strlen(progname));
 		write(2, ": 1: ", 5);
 		write(2, args[0], custom_strlen(args[0]));
-		write(2, ":Illegal number: ", 17);
+		write(2, ": Illegal number: ", 18);
 		write(2, args[1], custom_strlen(args[1]));
 		write(2, "\n", 1);
 	}
