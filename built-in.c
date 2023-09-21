@@ -13,7 +13,7 @@ int builtin(char *progname, char **args, char **env, char *buffer)
 	builtin_t builtins[] =
 
 	{
-		{"env", env_builtin}, {NULL, NULL},
+		{"env", env_builtin}, {"cd", cd_builtin}, {NULL, NULL},
 	};
 
 	i = 0;
@@ -85,5 +85,38 @@ int env_builtin(char __attribute__((unused))**args, char **env)
 		write(1, "\n", 2);
 		i++;
 	}
+	return (0);
+}
+
+int cd_builtin(char **args, char __attribute__((unused))**env)
+{
+	const char *cur;
+	char *prev = NULL;
+
+	if (args[1] == NULL || strcmp(args[1], "~") == 0)
+	{
+		cur = getenv("HOME");
+		if (cur == NULL)
+			cur = getenv("PWD");
+	}
+
+	else if (strcmp(args[1], "-") == 0)
+	{
+		cur = getenv("_OLDPWD");
+		if (cur == NULL)
+			cur = getenv("PWD");
+	}
+	else
+		cur = args[1];
+
+	prev = getcwd(prev, 0);
+	if (chdir(cur) != 0)
+	{
+		perror("cd");
+		free(prev);
+		return (-1);
+	}
+	setenv("_OLDPWD", prev, 1);
+	free(prev);
 	return (0);
 }

@@ -35,6 +35,7 @@ void command_not_found(char *progname, char **args);
 int exit_builtin(char *progname, char **args, char **env, char *buffer);
 int builtin(char *progname, char **args, char **env, char *buffer);
 int env_builtin(char **args, char **env);
+int cd_builtin(char **args, char **env);
 int isnumber(char *s);
 int custom_isdigit(int c);
 int custom_atoi(char *s);

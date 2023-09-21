@@ -17,6 +17,8 @@ int access_command(char *progname, char **args, char **env, char *buffer)
 	i = builtin(progname, args, env, buffer);
 	if (i == 0)
 		return (i);
+	if (i == -1)
+		return (1);
 
 	if (access(args[0], X_OK) == 0)
 	{
