@@ -14,15 +14,9 @@ int access_command(char *progname, char **args, char **env, char *buffer)
 	int i;
 	char *path, *_path, *cmd;
 
-	i = builtin(args, env);
+	i = builtin(progname, args, env, buffer);
 	if (i == 0)
 		return (i);
-	else if (i == -1)
-	{
-		free(args);
-		free(buffer);
-		exit(EXIT_SUCCESS);
-	}
 
 	if (access(args[0], X_OK) == 0)
 	{
